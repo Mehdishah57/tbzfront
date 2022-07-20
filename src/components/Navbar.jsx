@@ -1,15 +1,29 @@
 import React, { useContext } from 'react';
-import { Flex, Center, Text, Avatar, Button } from "@chakra-ui/react";
+import { Flex, Center, Text, Avatar, Button, Select } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { UserContext } from "../global/UserContext";
 import { useNavigate } from 'react-router-dom';
+import { CountryContext } from '../global/CountryContext';
 
 const Navbar = () => {
   const [user] = useContext(UserContext);
+  const {countries, country, setCountry} = useContext(CountryContext);
   const navigate = useNavigate();
 
   return (
     <Flex w='100%' p="10px" justifyContent="space-between" alignItems="center" borderBottom='1px solid brown'>
+      <Select
+        placeholder='Country'
+        size="md"
+        w="120px"
+        value={country}
+        bgColor="brown"
+        color='white'
+        focusBorderColor="brown"
+        onChange={e => setCountry(e.currentTarget.value)}
+      >
+        {countries?.map(c => <option style={{backgroundColor:'brown'}} key={c._id} value={c.name}>{c.code}</option>)}
+      </Select>
       <Text 
         onClick={()=>navigate("/home")} 
         cursor="pointer" 
